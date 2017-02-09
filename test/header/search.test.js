@@ -4,7 +4,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { spy } from 'sinon'
 
-test('should contain an input and a small', t => {
+test('should contain an input, a small and a link', t => {
   const wrapper = shallow(<Search search={() => { }} />)
 
   t.is(wrapper.containsAllMatchingElements([
