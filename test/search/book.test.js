@@ -3,10 +3,16 @@ import test from 'ava'
 import React from 'react'
 import { shallow } from 'enzyme'
 
-test('should render book', t => {
-  const wrapper = shallow(<Book key='1' id='1' title='my book' authors='foo, bar' language='en' thumbUrl='http://foo.com/bar.png' />)
+test('should render title', t => {
+  const title = 'my book'
+  const wrapper = shallow(<Book key='1' id='1' title={title} authors={[ 'foo', 'bar' ]} language='en' thumbUrl='http://foo.com/bar.png' />)
 
-  console.log(wrapper.text())
+  t.is(wrapper.find('.book-title').text().includes(title), true)
+})
 
-  t.is(wrapper.contains(<img src='http://foo.com/bar.png' alt='my book' />), true)
+test('should render authors', t => {
+  const wrapper = shallow(<Book key='1' id='1' title='my book' authors={[ 'foo', 'bar' ]} language='en' thumbUrl='http://foo.com/bar.png' />)
+
+
+  t.deepEqual(wrapper.find('.book-authors').find('span').length, 2)
 })

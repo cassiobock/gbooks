@@ -4,7 +4,7 @@ module.exports = {
   watch: true,
   entry: './app.js',
   output: {
-    path: path.join(__dirname, 'assets'),
+    path: path.join(__dirname, 'assets', 'js'),
     filename: 'bundle.js'
   },
   devtool: 'cheap-module-eval-source-map',
