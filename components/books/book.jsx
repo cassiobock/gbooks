@@ -10,13 +10,25 @@ const Book = ({ query, id, volumeInfo, onDetailsClick, onFavoriteClick }) => {
 
   return (
     <div className='column'>
-      <Cover images={imageLinks} alt={title} isDetails={false} />
-      <ListButtons id={id} onDetailsClick={onDetailsClick} onFavoriteClick={onFavoriteClick} />
-      <BookTitle query={query} title={title} />
-      <div className='book-keys'>
-        <Language language={language} />
+      <div className='row'>
+        <div className='column center-y-middle list-book-title'>
+          <BookTitle query={query} title={title} />
+        </div>
       </div>
-      <Authors authors={authors} />
+      <div className='row'>
+        <div className='column'>
+          <Cover images={imageLinks} alt={title} isDetails={false} />
+        </div>
+      </div>
+      <ListButtons id={id} onDetailsClick={onDetailsClick} onFavoriteClick={onFavoriteClick} />
+      <div className='row'>
+        <div className='column'>
+          <Authors id={id} authors={authors} />
+        </div>
+        <div className='column'>
+          <Language language={language} />
+        </div>
+      </div>
     </div>
   )
 }

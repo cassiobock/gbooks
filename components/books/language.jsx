@@ -4,8 +4,8 @@ const format = (language) => language ? language.toUpperCase() : language
 
 const Language = ({ language }) => (
   <div>
-    <span className='book-language display-block'>Language: </span>
-    <span className='display-block'>{format(language)}</span>
+    <label>Language: </label>
+    <span>{format(language)}</span>
   </div>
 )
 

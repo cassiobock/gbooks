@@ -43,7 +43,7 @@ const BookList = ({ query, books, onDetailsClick, onFavoriteClick }) => {
   return (
     <div>
       {rows.map((row, index) => (
-        <div key={index} className='row books'>
+        <div key={index} className='row book-row'>
           {row}
         </div>
       ))}
