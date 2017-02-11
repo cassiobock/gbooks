@@ -11,7 +11,7 @@ export const searchBooks = (term) => {
       q: term,
       startIndex: 0,
       maxResults: 20,
-      fields: 'items(id,volumeInfo(authors,imageLinks,language,mainCategory,title)),totalItems',
+      fields: 'items(id,volumeInfo(authors,imageLinks,language,title)),totalItems',
       key
     }
 
@@ -28,7 +28,7 @@ export const getBook = (id) => {
   return new Promise((resolve, reject) => {
     const queryParameters = {
       volumeId: id,
-      fields: 'id,volumeInfo(authors,categories,description,imageLinks,language,mainCategory,pageCount,publishedDate,publisher,title)'
+      fields: 'id,volumeInfo(authors,categories,description,imageLinks,language,pageCount,publishedDate,publisher,title)'
     }
 
     const url = `${baseUrl}/${id}?${queryString.stringify(queryParameters)}`

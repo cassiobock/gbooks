@@ -5,7 +5,7 @@ import Title from './title'
 
 const Books = ({ lastSearch, books, bookDetails, showBookDetails, onBackButtonClick, onDetailsClick, onFavoriteClick }) => {
   if (showBookDetails) {
-    return <Details book={bookDetails} />
+    return <Details book={bookDetails} onBackClick={onBackButtonClick} onFavoriteClick={onFavoriteClick} />
   }
 
   return (

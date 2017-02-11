@@ -7,7 +7,7 @@ const ListButtons = ({ id, onDetailsClick, onFavoriteClick }) => {
         <button className='button button-outline float-right' onClick={() => onDetailsClick(id)}>Details</button>
       </div>
       <div className='column'>
-        <button className='float-left' onClick={() => onDetailsClick(id)}>
+        <button className='float-left' onClick={() => onFavoriteClick(id)}>
           <span className='fa fa-star-o' />
           <span> Favorite</span>
         </button>

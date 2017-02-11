@@ -1,66 +1,72 @@
 import Authors from './authors'
 import Cover from './cover'
+import DetailsButtons from './details-buttons'
+import Description from './description'
 import Language from './language'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
-const Details = ({ book, onBackButtonClick, onFavoriteClick }) => {
+const Details = ({ book, onBackClick, onFavoriteClick }) => {
+  const id = book.id
   const { authors, description, imageLinks, language, pageCount, publishedDate, publisher, title } = book.volumeInfo
-
-  const formatedDescription = { __html: description }
 
   return (
     <div className='book-details'>
       <div className='row'>
         <div className='column'>
           <div className='row'>
-            <Cover images={imageLinks} alt={title} isDetails />
-          </div>
-          <div className='row'>
             <div className='column'>
-              <button className='button button-outline' onClick={onBackButtonClick}>Back</button>
-            </div>
-            <div className='column'>
-              <button onClick={onFavoriteClick}>
-                <span className='fa fa-star-o' />
-                <span> Favorite</span>
-              </button>
+              <Cover images={imageLinks} alt={title} isDetails />
             </div>
           </div>
+          <DetailsButtons id={id} onBackClick={onBackClick} onFavoriteClick={onFavoriteClick} />
         </div>
         <div className='column'>
-          <div className='row text-center'>
-            <h3>{title}</h3>
+          <div className='row'>
+            <h2 className='details-book-title'>{title}</h2>
           </div>
           <div className='row'>
             <div className='column'>
               <Authors authors={authors} />
             </div>
             <div className='column'>
-              <span className='book-title display-block'>Publisher: </span>
-              <span className='display-block'>{publisher}</span>
+              <label>Publisher: </label>
+              <span>{publisher}</span>
             </div>
             <div className='column'>
-              <span className='book-title display-block'>Published date: </span>
-              <span className='display-block'>{publishedDate}</span>
+              <label>Published date: </label>
+              <span>{publishedDate}</span>
             </div>
             <div className='column'>
-              <span className='book-title display-block'>Pages: </span>
-              <span className='display-block'>{pageCount}</span>
+              <label>Pages: </label>
+              <span>{pageCount}</span>
             </div>
             <div className='column'>
               <Language language={language} />
             </div>
           </div>
-          <div className='row book-details-descriptions'>
-            <div className='column'>
-              <span className='book-title display-block'>Description: </span>
-              <p className='display-block' dangerouslySetInnerHTML={formatedDescription} />
-            </div>
-          </div>
+          <Description description={description} />
         </div>
       </div>
     </div >
   )
+}
+
+Details.propTypes = {
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    volumeInfo: PropTypes.shape({
+      authors: PropTypes.array,
+      description: PropTypes.string,
+      imageLinks: PropTypes.object,
+      language: PropTypes.string,
+      pageCount: PropTypes.number,
+      publishedDate: PropTypes.string,
+      publisher: PropTypes.string,
+      title: PropTypes.string
+    })
+  }).isRequired,
+  onBackClick: PropTypes.func,
+  onFavoriteClick: PropTypes.func
 }
 
 export default Details

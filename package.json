@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.22.0",
     "babel-register": "^6.22.0",
     "enzyme": "^2.7.1",
+    "idb-keyval": "^2.3.0",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",

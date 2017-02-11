@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   watch: true,
@@ -9,8 +10,13 @@ module.exports = {
   },
   devtool: 'cheap-module-eval-source-map',
   resolve: {
-    extensions: [ '.js', '.jsx' ]
+    extensions: ['.js', '.jsx']
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ],
   module: {
     loaders: [
       {
@@ -18,7 +24,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: [ 'react', 'es2015' ]
+          presets: ['react', 'es2015']
         }
       }
     ]

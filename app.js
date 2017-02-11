@@ -1,19 +1,21 @@
+import * as bookService from './src/book-service'
 import Favorites from './components/favorites/index'
+import * as favoriteService from './src/favorite-service'
 import Header from './components/header/index'
 import { IndexRoute, Router, Route, hashHistory } from 'react-router'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { searchBooks, getBook } from './src/book-service'
 import Books from './components/books/index'
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
       query: '',
       lastSearch: '',
       books: [],
+      favoriteBooks: [],
       bookDetails: {},
       showBookDetails: false
     }
@@ -24,58 +26,89 @@ class App extends Component {
     this.handleSearchClick = this.handleSearchClick.bind(this)
     this.handleDetailsClick = this.handleDetailsClick.bind(this)
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this)
+    this.handleRemoveFavoriteClick = this.handleRemoveFavoriteClick.bind(this)
   }
 
-  handleError(err) {
+  componentDidMount () {
+    favoriteService.getAll()
+      .then(favoriteBooks => this.setState({ favoriteBooks }))
+      .catch(this.handleError)
+  }
+
+  handleError (err) {
     console.log(err)
   }
 
-  getBook(id) {
-    getBook(id)
-      .then(book => this.setState({ bookDetails: book, showBookDetails: true }))
+  getBook (id) {
+    bookService.getBook(id)
+      .then(book => this.setState({ bookDetails: book, showBookDetails: true }, () => {
+        if (this.props.location.pathname !== '/') {
+          hashHistory.push('/')
+        }
+      }))
       .catch(this.handleError)
   }
 
-  updateBooks() {
-    searchBooks(this.state.query)
-      .then(books => (
-        this.setState({ lastSearch: this.state.query, books: books.items, showBookDetails: false },
-          () => hashHistory.push('/'))
-      ))
+  updateBooks () {
+    bookService.searchBooks(this.state.query)
+      .then(books => this.setState({ lastSearch: this.state.query, books: books.items, showBookDetails: false }, () => {
+        if (this.props.location.pathname !== '/') {
+          hashHistory.push('/')
+        }
+      }))
       .catch(this.handleError)
   }
 
-  handleSearchChange(e) {
+  handleSearchChange (e) {
     this.setState({ query: e.target.value })
   }
 
-  handleSearchKeyPress(e) {
+  handleSearchKeyPress (e) {
     if (e.key === 'Enter') {
       this.updateBooks()
     }
   }
 
-  handleSearchClick() {
+  handleSearchClick () {
     this.updateBooks()
   }
 
-  handleDetailsClick(id) {
+  handleDetailsClick (id) {
     this.getBook(id)
   }
 
-  handleFavoriteClick() {
-
+  handleBackButtonClick () {
+    this.setState({ bookDetails: {}, showBookDetails: false })
   }
 
-  render() {
+  handleFavoriteClick (id) {
+    bookService.getBook(id)
+      .then(book => favoriteService.save(book))
+      .then(() => favoriteService.getAll())
+      .then(favoriteBooks => this.setState({ favoriteBooks }))
+      .catch(this.handleError)
+  }
+
+  handleRemoveFavoriteClick (id) {
+    favoriteService.remove(id)
+      .then(() => favoriteService.getAll())
+      .then(favoriteBooks => this.setState({ favoriteBooks }))
+      .catch(this.handleError)
+  }
+
+  render () {
     const childrenProps = {
       query: this.state.query,
       lastSearch: this.state.lastSearch,
       books: this.state.books,
+      favoriteBooks: this.state.favoriteBooks,
       bookDetails: this.state.bookDetails,
       showBookDetails: this.state.showBookDetails,
       onDetailsClick: this.handleDetailsClick,
-      onFavoriteClick: this.handleFavoriteClick
+      onBackButtonClick: this.handleBackButtonClick,
+      onFavoriteClick: this.handleFavoriteClick,
+      onRemoveFavoriteClick: this.handleRemoveFavoriteClick
     }
 
     return (

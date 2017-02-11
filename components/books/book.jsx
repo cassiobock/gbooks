@@ -1,5 +1,5 @@
 import Authors from './authors'
-import BookTitle from './book-title'
+import ListTitle from './list-title'
 import Cover from './cover'
 import Language from './language'
 import ListButtons from './list-buttons'
@@ -12,7 +12,7 @@ const Book = ({ query, id, volumeInfo, onDetailsClick, onFavoriteClick }) => {
     <div className='column'>
       <div className='row'>
         <div className='column center-y-middle list-book-title'>
-          <BookTitle query={query} title={title} />
+          <ListTitle query={query} title={title} />
         </div>
       </div>
       <div className='row'>
