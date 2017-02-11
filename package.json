@@ -4,7 +4,8 @@
   "main": "index.js",
   "repository": "git@github.com:cassiobsilva/gbooks.git",
   "scripts": {
-    "debug": "webpack",
+    "build": "webpack",
+    "debug": "webpack  --watch",
     "test": "ava"
   },
   "author": "Cassio Bock <cassio@bock.com.br>",

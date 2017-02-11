@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  watch: true,
   entry: './app.js',
   output: {
     path: path.join(__dirname, 'assets', 'js'),
