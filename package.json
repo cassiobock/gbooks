@@ -11,7 +11,7 @@
   "author": "Cassio Bock <cassio@bock.com.br>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.18.1",
+    "ava": "^2.2.0",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
